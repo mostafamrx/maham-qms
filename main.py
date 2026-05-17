@@ -658,10 +658,6 @@ elif page == "التدقيق الداخلي (Internal Audit)":
                     if response.status_code == 200 and "TRUE_SUCCESS" in response.text:
                         st.balloons()
                         st.success("✅ تم حفظ تقرير التدقيق بنجاح وإرساله مباشرة إلى قاعدة البيانات!")
-                        if response.status_code == 200 and "TRUE_SUCCESS" in response.text:
-                        st.balloons()
-                        st.success("✅ تم حفظ التقييم بنجاح وإرساله مباشرة إلى قاعدة البيانات!")
-                        
                         # --- الكود الجديد لتفريغ الذاكرة والعودة للبداية ---
                         # 1. الانتظار 3 ثواني ليتمكن المفتش من رؤية رسالة النجاح والبالونات
                         time.sleep(3) 
