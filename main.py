@@ -4,7 +4,7 @@ import datetime
 import pandas as pd
 import base64
 import json
-import time
+
 IMGBB_API_KEY = "0813b58c605aee769f5f8852ca06fb18"
 # 1. إعدادات الصفحة الأساسية (هوية MAHAM)
 st.set_page_config(
@@ -12,7 +12,13 @@ st.set_page_config(
     page_icon="📋",
     layout="centered"
 )
-
+# --- كود إجبار السيرفر على بدء جلسة نظيفة عند أول تحميل أو Refresh حقيقي ---
+# نتحقق إذا كانت هذه هي أول لقطة لتحميل الصفحة في الجلسة الحالية
+if "app_initialized" not in st.session_state:
+    # نقوم بتصفير الذاكرة تماماً للتخلص من أي بقايا عالقة من جلسات سحابية سابقة
+    st.session_state.clear()
+    # نضع علامة تؤكد أن التطبيق تم تهيئته الآن بنجاح
+    st.session_state["app_initialized"] = True
 GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCe7SSWSPbcbrAR7u-HIKscwtP5v3a7XbBq7ZOaBjDSg-f-OerPJlb9h47npAW8K2K0g/exec"
 # --- كود CSS لتحويل التطبيق إلى من اليمين لليسار (RTL) ---
 st.markdown(
@@ -658,17 +664,6 @@ elif page == "التدقيق الداخلي (Internal Audit)":
                     if response.status_code == 200 and "TRUE_SUCCESS" in response.text:
                         st.balloons()
                         st.success("✅ تم حفظ تقرير التدقيق بنجاح وإرساله مباشرة إلى قاعدة البيانات!")
-                        # --- الكود الجديد لتفريغ الذاكرة والعودة للبداية ---
-                        # 1. الانتظار 3 ثواني ليتمكن المفتش من رؤية رسالة النجاح والبالونات
-                        time.sleep(3) 
-                        
-                        # 2. مسح جميع البيانات المُدخلة من ذاكرة التطبيق
-                        for key in st.session_state.keys():
-                            del st.session_state[key]
-                            
-                        # 3. إعادة تحميل الصفحة (Refresh) لتعود للصفر
-                        st.rerun()
-                        # --------------------------------------------------
                     else:
                         st.warning(f"⚠️ حدث خطأ أثناء الحفظ في الشيت: {response.text}")
                         
