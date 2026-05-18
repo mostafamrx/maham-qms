@@ -20,31 +20,31 @@ if "app_initialized" not in st.session_state:
     # نضع علامة تؤكد أن التطبيق تم تهيئته الآن بنجاح
     st.session_state["app_initialized"] = True
 GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCe7SSWSPbcbrAR7u-HIKscwtP5v3a7XbBq7ZOaBjDSg-f-OerPJlb9h47npAW8K2K0g/exec"
-# --- كود CSS لتحويل التطبيق إلى من اليمين لليسار (RTL) ---
+# --- كود CSS المطور والمتوافق مع شاشات الموبايل (RTL Mobile Friendly) ---
 st.markdown(
     """
     <style>
-    /* قلب اتجاه واجهة التطبيق بالكامل لتنقل القائمة الجانبية لليمين */
-    .stApp {
+    /* 1. تطبيق RTL على المحتوى الداخلي فقط بدلاً من التطبيق بالكامل لحماية واجهة الموبايل */
+    [data-testid="block-container"] {
         direction: rtl;
     }
     
-    /* محاذاة جميع النصوص لليمين */
-    p, div, input, label, h1, h2, h3, h4, h5, h6 {
-        text-align: right !important;
-    }
-
-    /* تعديل اتجاه العناصر داخل القائمة الجانبية لتكون متناسقة */
+    /* 2. ضبط القائمة الجانبية */
     [data-testid="stSidebar"] {
         direction: rtl;
     }
 
-    /* نقل زر إغلاق القائمة الجانبية (السهم) إلى اليسار */
-    [data-testid="stSidebarNav"] button, [data-testid="baseButton-headerNoPadding"] {
-        float: left;
+    /* 3. محاذاة جميع النصوص لليمين */
+    p, div, input, label, h1, h2, h3, h4, h5, h6 {
+        text-align: right !important;
     }
 
-    /* ضبط اتجاه الجداول لتقرأ من اليمين لليسار */
+    /* 4. استثناء الأزرار لتبقى نصوصها في المنتصف ولا يتشوه شكلها */
+    button p {
+        text-align: center !important;
+    }
+
+    /* 5. ضبط الجداول وتقرأ من اليمين لليسار */
     table {
         direction: rtl;
     }
@@ -52,9 +52,14 @@ st.markdown(
         text-align: right !important;
     }
     
-    /* تحسين شكل القوائم المنسدلة لتتناسب مع اللغة العربية */
+    /* 6. تحسين شكل القوائم المنسدلة */
     .stSelectbox div[data-baseweb="select"] > div {
         direction: rtl;
+    }
+
+    /* 7. السطر السحري: إبقاء زر القائمة (الهامبرغر) للموبايل ليعمل بشكل سليم */
+    [data-testid="collapsedControl"] {
+        direction: ltr !important; 
     }
     </style>
     """,
