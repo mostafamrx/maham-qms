@@ -245,7 +245,7 @@ if page == "تقرير الفتح اليومي":
     st.markdown("---")
 
 # 6. زر الإرسال المباشر لـ Google Sheets
-    if st.button("🚀 اعتماد وإرسال التقييم", use_container_width=True):
+    if st.button("🚀 اعتماد وإرسال التقرير", use_container_width=True):
         if not inspector_name:
             st.error("⚠️ برجاء إدخال اسم مسؤول الجودة أعلى الصفحة!")
         else:
@@ -615,7 +615,7 @@ elif page == "التدقيق الداخلي (Internal Audit)":
 # ---------------------------------------------------------
     # 5. زر اعتماد وإرسال تقرير التدقيق المباشر لـ Google Sheets
     # ---------------------------------------------------------
-    if st.button("🚀 اعتماد وإرسال تقرير التدقيق", use_container_width=True):
+    if st.button("🚀 اعتماد وإرسال التقرير", use_container_width=True):
         if not inspector_name:
             st.error("⚠️ برجاء إدخال اسم مسؤول الجودة من القائمة الجانبية!")
         else:
