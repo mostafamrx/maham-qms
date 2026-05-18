@@ -59,6 +59,7 @@ st.markdown(
 
     /* 7. السطر السحري: إبقاء زر القائمة (الهامبرغر) للموبايل ليعمل بشكل سليم */
     [data-testid="collapsedControl"] {
+    
         direction: ltr !important; 
     }
     </style>
