@@ -4,9 +4,8 @@ import datetime
 import pandas as pd
 import base64
 import json
-import time
 
-IMGBB_API_KEY = "0813b58c605aee769f5f8852ca06fb18"
+
 # 1. إعدادات الصفحة الأساسية (هوية MAHAM)
 st.set_page_config(
     page_title="MAHAM QMS",
@@ -14,11 +13,7 @@ st.set_page_config(
     layout="centered"
 )
 # --- كود إجبار السيرفر على بدء جلسة نظيفة عند أول تحميل أو Refresh حقيقي ---
-# هذا الكود يتدخل قبل أن يقوم المتصفح برسم أي شيء على الشاشة
-if st.session_state.get("clear_all", False):
-    for key in list(st.session_state.keys()):
-        del st.session_state[key]
-    st.rerun()
+IMGBB_API_KEY = "0813b58c605aee769f5f8852ca06fb18"
 GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCe7SSWSPbcbrAR7u-HIKscwtP5v3a7XbBq7ZOaBjDSg-f-OerPJlb9h47npAW8K2K0g/exec"
 # --- كود CSS المطور والمتوافق مع شاشات الموبايل (RTL Mobile Friendly) ---
 st.markdown(
@@ -78,9 +73,6 @@ st.sidebar.markdown("### 👤 بيانات التقييم الثابتة")
 
 # البيانات الأساسية (نقلناها هنا لتكون متاحة للتقريرين)
 branch_name = st.sidebar.selectbox("اختر الفرع", ["كرينكل المحافظ", "كرينكل دله", "كرينكل أكتوبر","كيكن باغوص","كرينكل طلعت حرب","كرينكل شيراتون","كرينكل مول العرب","كرينكل التجمع الأول","كرينكل التجمع الخامس"])
-if st.sidebar.button("🔄 بدء تقييم جديد (تفريغ البيانات)"):
-    st.session_state["clear_all"] = True
-    st.rerun()
 inspector_name = st.sidebar.text_input("اسم مسؤول الجودة")
 
 # الحقول الجديدة
@@ -673,11 +665,7 @@ elif page == "التدقيق الداخلي (Internal Audit)":
                     if response.status_code == 200 and "TRUE_SUCCESS" in response.text:
                         st.balloons()
                         st.success("✅ تم حفظ تقرير التدقيق بنجاح وإرساله مباشرة إلى قاعدة البيانات!")
-                        time.sleep(2) # انتظار ثانيتين ليقرأ المفتش الرسالة
-                        
-                        # إرسال "إشارة المسح" للكود الموجود بالأعلى
-                        st.session_state["clear_all"] = True
-                        st.rerun()
+
                     else:
                         st.warning(f"⚠️ حدث خطأ أثناء الحفظ في الشيت: {response.text}")
                         
